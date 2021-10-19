@@ -6,11 +6,23 @@ const ctx = getContext()
 const config: webpack.Configuration = {
     mode: ctx.NODE_ENV,
     entry: {
-        queue: {
+        'queue.umd': {
             import: dir('src/queue.ts'),
             library: {
                 type: 'umd',
                 name: 'Queue',
+            },
+        },
+        'queue.cjs': {
+            import: dir('src/queue.ts'),
+            library: {
+                type: 'commonjs',
+            },
+        },
+        'queue.esm': {
+            import: dir('src/queue.ts'),
+            library: {
+                type: 'module',
             },
         },
     },
@@ -35,6 +47,9 @@ const config: webpack.Configuration = {
                 exclude: /node_modules/,
             },
         ],
+    },
+    experiments: {
+        outputModule: true,
     },
 }
 

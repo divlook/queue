@@ -12,9 +12,9 @@
   "keywords": [
     "queue"
   ],
-  "source": "src/queue.ts",
-  "main": "dist/queue.js",
+  "main": "dist/queue.cjs.js",
   "module": "dist/queue.esm.js",
+  "browser": "dist/queue.umd.js",
   "types": "dist/@types/queue.d.ts",
   "files": [
     "dist"
