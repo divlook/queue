@@ -43,7 +43,15 @@ const config: webpack.Configuration = {
         rules: [
             {
                 test: /\.ts$/,
-                use: ['babel-loader', 'ts-loader'],
+                use: [
+                    'babel-loader',
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: ctx.TS_CONFIG_PATH,
+                        },
+                    },
+                ],
                 exclude: /node_modules/,
             },
         ],
@@ -60,10 +68,12 @@ function getContext() {
     const NODE_ENV = (process.env.NODE_ENV ?? 'development') as
         | 'development'
         | 'production'
+    const TS_CONFIG_PATH = path.join(ROOT_DIR, 'tsconfig.build.json')
 
     return {
         ROOT_DIR,
         NODE_ENV,
+        TS_CONFIG_PATH,
     }
 }
 
