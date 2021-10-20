@@ -4,7 +4,8 @@
   "description": "queue",
   "scripts": {
     "build": "bin/build.sh",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
