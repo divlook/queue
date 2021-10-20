@@ -1,7 +1,18 @@
+interface QueueEvent {
+    type: 'success' | 'run' | 'error'
+    error?: Error
+}
+
+interface QueueEventListener {
+    (event: QueueEvent): void
+}
+
 export class Queue {
     #isRunning = false
 
     #que: Function[] = []
+
+    #listeners: Set<QueueEventListener> = new Set()
 
     get isRunnin() {
         return this.#isRunning
@@ -21,7 +32,18 @@ export class Queue {
 
             this.#isRunning = true
 
-            await current?.()
+            try {
+                this.emit({ type: 'run' })
+
+                await current?.()
+
+                this.emit({ type: 'success' })
+            } catch (reason) {
+                this.emit({
+                    type: 'error',
+                    error: reason as Error,
+                })
+            }
 
             this.#isRunning = false
 
@@ -29,6 +51,30 @@ export class Queue {
                 await this.next()
             }
         }
+    }
+
+    subscribe(listener: QueueEventListener) {
+        if (this.#listeners.size >= 1000) {
+            return
+        }
+
+        this.#listeners.add(listener)
+
+        return {
+            unsubscribe: () => {
+                this.#listeners.delete(listener)
+            },
+        }
+    }
+
+    unsubscribeAll() {
+        this.#listeners.clear()
+    }
+
+    private emit(event: QueueEvent) {
+        this.#listeners.forEach((listener) => {
+            listener?.(event)
+        })
     }
 }
 
