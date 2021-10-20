@@ -1,5 +1,5 @@
 interface QueueEvent {
-    type: 'success' | 'run' | 'error'
+    type: 'success' | 'error'
     error?: Error
 }
 
@@ -33,10 +33,7 @@ export class Queue {
             this.#isRunning = true
 
             try {
-                this.emit({ type: 'run' })
-
                 await current?.()
-
                 this.emit({ type: 'success' })
             } catch (reason) {
                 this.emit({
