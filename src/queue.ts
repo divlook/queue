@@ -14,7 +14,7 @@ export class Queue {
 
     #listeners: Set<QueueEventListener> = new Set()
 
-    get isRunnin() {
+    get isRunning() {
         return this.#isRunning
     }
 
