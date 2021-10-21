@@ -5,6 +5,7 @@
   "scripts": {
     "build": "bin/build.sh",
     "docgen": "typedoc --excludePrivate --out docs src/queue.ts",
+    "lint:code-style": "prettier -c **/*.ts",
     "test": "jest",
     "test:watch": "jest --watch"
   },
