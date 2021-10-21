@@ -1,9 +1,9 @@
 name: CD
 
 on:
-  push:
-    tags:
-      - v*
+  workflow_run:
+    workflows: ["Semantic Release"]
+    types: [completed]
   workflow_dispatch:
 
 jobs:
