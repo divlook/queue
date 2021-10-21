@@ -15,18 +15,18 @@ describe('Queue', () => {
 
     it('insert', async () => {
         const que = new Queue()
-        const cb = jest.fn()
+        const task = jest.fn()
 
-        expect(cb).not.toBeCalled()
+        expect(task).not.toBeCalled()
 
-        await que.next(cb)
-        await que.next(cb)
-        await que.next(cb)
-        await que.next(cb)
+        await que.next(task)
+        await que.next(task)
+        await que.next(task)
+        await que.next(task)
 
-        expect(cb).toBeCalled()
+        expect(task).toBeCalled()
 
-        expect(cb).toHaveBeenCalledTimes(4)
+        expect(task).toHaveBeenCalledTimes(4)
     })
 
     describe('listener', () => {
@@ -34,18 +34,18 @@ describe('Queue', () => {
 
         it('default flow', (done) => {
             const que = new Queue()
-            const cb = jest.fn()
+            const task = jest.fn()
 
             que.addListener('start', () => {
                 expect(que.size).toBe(0)
             })
 
             que.addListener('run', () => {
-                expect(cb).not.toBeCalled()
+                expect(task).not.toBeCalled()
             })
 
             que.addListener('success', () => {
-                expect(cb).toBeCalled()
+                expect(task).toBeCalled()
             })
 
             que.addListener('done', () => {
@@ -61,7 +61,7 @@ describe('Queue', () => {
                 done()
             })
 
-            que.next(cb)
+            que.next(task)
         })
 
         describe('error', () => {

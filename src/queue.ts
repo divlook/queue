@@ -57,13 +57,13 @@ export class Queue {
         return this.#que.length
     }
 
-    async next(cb?: Function) {
+    async next(task?: Function) {
         if (!this.size) {
             this.emit(QueueResponseTypeKeys.start)
         }
 
-        if (typeof cb === 'function') {
-            this.#que.push(cb)
+        if (typeof task === 'function') {
+            this.#que.push(task)
         }
 
         if (!this.#isRunning) {
