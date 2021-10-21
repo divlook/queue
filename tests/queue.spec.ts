@@ -29,30 +29,85 @@ describe('Queue', () => {
         expect(cb).toHaveBeenCalledTimes(4)
     })
 
-    describe('subscribe', () => {
-        it('success', (done) => {
+    describe('listener', () => {
+        jest.setTimeout(500)
+
+        it('default flow', (done) => {
             const que = new Queue()
             const cb = jest.fn()
 
-            que.next(cb)
+            que.addListener('start', () => {
+                expect(que.size).toBe(0)
+            })
 
-            que.subscribe((event) => {
+            que.addListener('run', () => {
+                expect(cb).not.toBeCalled()
+            })
+
+            que.addListener('success', () => {
                 expect(cb).toBeCalled()
-                expect(event.type).toBe('success')
+            })
+
+            que.addListener('done', () => {
+                expect(que.size).toBe(0)
+
+                que.next(() => {
+                    throw new Error('TEST')
+                })
+            })
+
+            que.addListener('error', (response) => {
+                expect(response).toHaveProperty('error')
                 done()
             })
-        })
-
-        it('error', (done) => {
-            const que = new Queue()
-            const cb = () => new Error('TEST')
 
             que.next(cb)
+        })
 
-            que.subscribe((event) => {
-                expect(event.type).toBe('error')
-                expect(event).toHaveProperty('error')
-                done()
+        describe('error', () => {
+            it('unknown error', (done) => {
+                const que = new Queue()
+
+                que.addListener('error', (response) => {
+                    expect(Queue.isDefinedError(response.error)).toBe(false)
+                    done()
+                })
+
+                que.next(() => {
+                    throw new Error('TEST')
+                })
+            })
+
+            describe('defined error', () => {
+                it('Queue.toType(typeOrKey)', (done) => {
+                    const que = new Queue()
+
+                    que.addListener('error', (response) => {
+                        expect(Queue.isDefinedError(response.error)).toBe(true)
+                        done()
+                    })
+
+                    que.next(() => {
+                        // @ts-ignore
+                        Queue.toType()
+                    })
+                })
+
+                it('.addListener', (done) => {
+                    const que = new Queue()
+
+                    try {
+                        Array(1001)
+                            .fill(null)
+                            .forEach(() => {
+                                que.addListener('run', () => {})
+                            })
+                        done('이 메시지가 보이면 안됨')
+                    } catch (error) {
+                        expect(Queue.isDefinedError(error)).toBe(true)
+                        done()
+                    }
+                })
             })
         })
     })

@@ -1,18 +1,53 @@
-interface QueueEvent {
-    type: 'success' | 'error'
-    error?: Error
+import { QueueError, QueueErrorKey } from '@/error'
+
+export enum QueueResponseTypeKeys {
+    start,
+    run,
+    success,
+    done,
+    error,
 }
 
-interface QueueEventListener {
-    (event: QueueEvent): void
+export type QueueResponseType = keyof typeof QueueResponseTypeKeys
+
+type TypeOrKey = QueueResponseType | QueueResponseTypeKeys
+
+export interface QueueResponse {
+    error?: QueueError | Error
+}
+
+export interface QueueListener {
+    (response: QueueResponse): void
 }
 
 export class Queue {
+    static toType(typeOrKey: TypeOrKey) {
+        const isMissingParameter = (typeOrKey ?? null) === null
+
+        let type: QueueResponseType
+
+        if (isMissingParameter) {
+            throw new QueueError('Required parameter is missing `typeOrKey`')
+        }
+
+        if (typeof typeOrKey === 'string') {
+            type = typeOrKey
+        } else {
+            type = QueueResponseTypeKeys[typeOrKey] as QueueResponseType
+        }
+
+        return type
+    }
+
+    static isDefinedError(error: any) {
+        return error?.check?.(QueueErrorKey) ?? false
+    }
+
     #isRunning = false
 
     #que: Function[] = []
 
-    #listeners: Set<QueueEventListener> = new Set()
+    #listeners: Map<QueueResponseType, Set<QueueListener>> = new Map()
 
     get isRunning() {
         return this.#isRunning
@@ -23,6 +58,10 @@ export class Queue {
     }
 
     async next(cb?: Function) {
+        if (!this.size) {
+            this.emit(QueueResponseTypeKeys.start)
+        }
+
         if (typeof cb === 'function') {
             this.#que.push(cb)
         }
@@ -33,45 +72,78 @@ export class Queue {
             this.#isRunning = true
 
             try {
+                this.emit(QueueResponseTypeKeys.run)
+
                 await current?.()
-                this.emit({ type: 'success' })
+
+                this.#isRunning = false
+
+                this.emit(QueueResponseTypeKeys.success)
+
+                if (this.size) {
+                    await this.next()
+                    return
+                }
+
+                this.emit(QueueResponseTypeKeys.done)
             } catch (reason) {
-                this.emit({
-                    type: 'error',
+                this.#isRunning = false
+
+                this.emit(QueueResponseTypeKeys.error, {
                     error: reason as Error,
                 })
-            }
-
-            this.#isRunning = false
-
-            if (this.size) {
-                await this.next()
             }
         }
     }
 
-    subscribe(listener: QueueEventListener) {
-        if (this.#listeners.size >= 1000) {
-            return
+    addListener(typeOrKey: TypeOrKey, listener: QueueListener) {
+        const type = Queue.toType(typeOrKey)
+        const listeners = this.#listeners.get(type) ?? new Set()
+
+        if (listeners.size >= 1000) {
+            throw new QueueError('Listener limit is 1000')
         }
 
-        this.#listeners.add(listener)
+        listeners.add(listener)
+
+        this.#listeners.set(type, listeners)
 
         return {
-            unsubscribe: () => {
-                this.#listeners.delete(listener)
+            remove: () => {
+                listeners.delete(listener)
             },
         }
     }
 
-    unsubscribeAll() {
+    removeAllListener(typeOrKey?: TypeOrKey) {
+        const type = typeOrKey ? Queue.toType(typeOrKey) : undefined
+
+        if (type) {
+            const listeners = this.#listeners.get(type) ?? new Set()
+
+            listeners.clear()
+
+            return
+        }
+
         this.#listeners.clear()
     }
 
-    private emit(event: QueueEvent) {
-        this.#listeners.forEach((listener) => {
-            listener?.(event)
+    private emit(typeOrKey: TypeOrKey, res: QueueResponse = {}) {
+        const type = Queue.toType(typeOrKey)
+        const listeners = this.#listeners.get(type) ?? new Set()
+
+        listeners.forEach((listener) => {
+            listener?.(res)
         })
+    }
+
+    retry() {
+        this.next()
+    }
+
+    clear() {
+        this.#que = []
     }
 }
 
