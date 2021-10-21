@@ -16,7 +16,7 @@
   ],
   "main": "dist/queue.cjs.js",
   "module": "dist/queue.esm.js",
-  "browser": "dist/queue.umd.js",
+  "browser": "dist/queue.browser.js",
   "types": "dist/@types/queue.d.ts",
   "files": [
     "dist"

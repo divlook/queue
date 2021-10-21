@@ -6,11 +6,12 @@ const ctx = getContext()
 const config: webpack.Configuration = {
     mode: ctx.NODE_ENV,
     entry: {
-        'queue.umd': {
+        'queue.browser': {
             import: dir('src/queue.ts'),
             library: {
-                type: 'umd',
+                type: 'window',
                 name: 'Queue',
+                export: 'default',
             },
         },
         'queue.cjs': {
