@@ -1,8 +1,9 @@
 name: CD
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - v*
   workflow_dispatch:
 
 jobs:
@@ -55,7 +56,7 @@ jobs:
         with:
           path: dist
           key: ${{ github.sha	}}
-      - run: pnpm publish
+      - run: pnpm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
