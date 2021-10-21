@@ -10,7 +10,7 @@ export enum QueueResponseTypeKeys {
 
 export type QueueResponseType = keyof typeof QueueResponseTypeKeys
 
-type TypeOrKey = QueueResponseType | QueueResponseTypeKeys
+export type TypeOrKey = QueueResponseType | QueueResponseTypeKeys
 
 export interface QueueResponse {
     error?: QueueError | Error
@@ -49,14 +49,25 @@ export class Queue {
 
     #listeners: Map<QueueResponseType, Set<QueueListener>> = new Map()
 
+    /**
+     * 작업 실행 여부
+     * - default : false
+     */
     get isRunning() {
         return this.#isRunning
     }
 
+    /**
+     * 대기 중인 작업 수
+     * - default : 0
+     */
     get size() {
         return this.#que.length
     }
 
+    /**
+     * 파라미터 `task`가 있으면 대기열에 추가하고, 대기열에서 가장 앞에 있는 `task`를 꺼낸 뒤 실행합니다.
+     */
     async next(task?: Function) {
         if (!this.size) {
             this.emit(QueueResponseTypeKeys.start)
