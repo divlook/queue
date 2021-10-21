@@ -6,8 +6,18 @@
 
 ## Install
 
+### npm
+
+https://www.npmjs.com/package/@divlook/queue
+
 ```bash
-# npm login --scope=@divlook --registry=https://npm.pkg.github.com
+npm install @divlook/queue
+```
+
+### gpr
+
+```bash
+npm login --scope=@divlook --registry=https://npm.pkg.github.com
 npm install @divlook/queue
 ```
 
@@ -52,7 +62,7 @@ const { Queue } = require('@divlook/queue')
 #### Browser
 
 ```html
-<script src="<path>/dist/queue.browser.js"></script>
+<script src="https://unpkg.com/@divlook/queue/dist/queue.browser.js"></script>
 <script>
     var que = new Queue()
 </script>
