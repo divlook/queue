@@ -17,8 +17,7 @@ npm install @divlook/queue
 ### gpr
 
 ```bash
-npm login --scope=@divlook --registry=https://npm.pkg.github.com
-npm install @divlook/queue
+npm install @divlook/queue --registry=https://npm.pkg.github.com
 ```
 
 ## Usage
