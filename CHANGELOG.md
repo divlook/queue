@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/divlook/queue/compare/v1.0.0...v1.0.1) (2021-10-21)
+
+
+### Bug Fixes
+
+* tag가 push될때는 CI workflow가 실행되지 않게 수정 ([0e9dff3](https://github.com/divlook/queue/commit/0e9dff33aa1074fb6436c1966da69534bbe988d0))
+
 # 1.0.0 (2021-10-21)
 
 
