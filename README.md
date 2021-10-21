@@ -1,5 +1,9 @@
 # README
 
+[![CI](https://github.com/divlook/queue/actions/workflows/ci.yml/badge.svg)](https://github.com/divlook/queue/actions/workflows/ci.yml)
+[![CD](https://github.com/divlook/queue/actions/workflows/cd.yml/badge.svg)](https://github.com/divlook/queue/actions/workflows/cd.yml)
+[![](https://img.shields.io/github/v/release/divlook/queue)](https://github.com/divlook/queue/releases)
+
 ## Install
 
 ```bash
