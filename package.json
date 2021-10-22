@@ -14,7 +14,8 @@
     "url": "git+https://github.com/divlook/queue.git"
   },
   "keywords": [
-    "queue"
+    "npm-package",
+    "utility-library"
   ],
   "main": "dist/queue.js",
   "browser": "dist/queue.js",
