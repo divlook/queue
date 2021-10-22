@@ -1,5 +1,6 @@
 import path from 'path'
 import webpack from 'webpack'
+import tsTransformPaths from '@zerollup/ts-transform-paths'
 
 const ctx = getContext()
 
@@ -50,6 +51,16 @@ const config: webpack.Configuration = {
                         loader: 'ts-loader',
                         options: {
                             configFile: ctx.TS_CONFIG_PATH,
+                            getCustomTransformers: (program) => {
+                                const transformer = tsTransformPaths(program)
+
+                                return {
+                                    before: [transformer.before],
+                                    afterDeclarations: [
+                                        transformer.afterDeclarations,
+                                    ],
+                                }
+                            },
                         },
                     },
                 ],

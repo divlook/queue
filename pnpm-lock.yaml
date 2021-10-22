@@ -5,6 +5,7 @@ specifiers:
   '@babel/preset-env': ^7.15.8
   '@babel/preset-typescript': ^7.15.0
   '@types/jest': ^27.0.2
+  '@zerollup/ts-transform-paths': ^1.7.18
   babel-jest: ^27.3.1
   babel-loader: ^8.2.2
   cross-env: ^7.0.3
@@ -23,6 +24,7 @@ devDependencies:
   '@babel/preset-env': 7.15.8_@babel+core@7.15.8
   '@babel/preset-typescript': 7.15.0_@babel+core@7.15.8
   '@types/jest': 27.0.2
+  '@zerollup/ts-transform-paths': 1.7.18_typescript@4.4.4
   babel-jest: 27.3.1_@babel+core@7.15.8
   babel-loader: 8.2.2_f5560e5b4f7053984b6dd7c23aa03d2f
   cross-env: 7.0.3
@@ -2511,6 +2513,24 @@ packages:
 
   /@xtuc/long/4.2.2:
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
+    dev: true
+
+  /@zerollup/ts-helpers/1.7.18_typescript@4.4.4:
+    resolution: {integrity: sha512-S9zN+y+i5yN/evfWquzSO3lubqPXIsPQf6p9OiPMpRxDx/0totPLF39XoRw48Dav5dSvbIE8D2eAPpXXJxvKwg==}
+    peerDependencies:
+      typescript: '>=3.7.2'
+    dependencies:
+      resolve: 1.20.0
+      typescript: 4.4.4
+    dev: true
+
+  /@zerollup/ts-transform-paths/1.7.18_typescript@4.4.4:
+    resolution: {integrity: sha512-YPVUxvWQVzRx1OBN0Pmkd58+R9FcfUJuwTaPUSoi5rKxuXMtxevTXdfi0w5mEaIH8b0DfL+wg0wFDHiJE+S2zA==}
+    peerDependencies:
+      typescript: '>=3.7.2'
+    dependencies:
+      '@zerollup/ts-helpers': 1.7.18_typescript@4.4.4
+      typescript: 4.4.4
     dev: true
 
   /abab/2.0.5:
@@ -5253,15 +5273,6 @@ packages:
       string-length: 4.0.2
     dev: true
 
-  /jest-worker/27.2.5:
-    resolution: {integrity: sha512-HTjEPZtcNKZ4LnhSp02NEH4vE+5OpJ0EsOWYvGQpHgUMLngydESAAMH5Wd/asPf29+XUDQZszxpLg1BkIIA2aw==}
-    engines: {node: '>= 10.13.0'}
-    dependencies:
-      '@types/node': 16.11.0
-      merge-stream: 2.0.0
-      supports-color: 8.1.1
-    dev: true
-
   /jest-worker/27.3.1:
     resolution: {integrity: sha512-ks3WCzsiZaOPJl/oMsDjaf0TRiSv7ctNgs0FqRr2nARsovz6AWWy4oLElwcquGSz692DzgZQrCLScPNs5YlC4g==}
     engines: {node: '>= 10.13.0'}
@@ -7282,7 +7293,7 @@ packages:
       uglify-js:
         optional: true
     dependencies:
-      jest-worker: 27.2.5
+      jest-worker: 27.3.1
       p-limit: 3.1.0
       schema-utils: 3.1.1
       serialize-javascript: 6.0.0
