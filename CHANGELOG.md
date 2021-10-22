@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/divlook/queue/compare/v1.0.1...v1.1.0) (2021-10-22)
+
+
+### Bug Fixes
+
+* gpr install 방법 수정 ([872f3e9](https://github.com/divlook/queue/commit/872f3e9d63e735cc45f7c035f1b88665529bf044))
+* path-alias가 적용되지 않는 버그 수정 ([d0a9749](https://github.com/divlook/queue/commit/d0a9749586a467670db5ff772f7fc107e019f6b9))
+
+
+### Features
+
+* import 방식이 변경되었습니다. ([9d748ff](https://github.com/divlook/queue/commit/9d748ffb500cd8eb5d64e1edaafdd84880b63389))
+
 ## [1.0.1](https://github.com/divlook/queue/compare/v1.0.0...v1.0.1) (2021-10-21)
 
 
