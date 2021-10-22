@@ -47,21 +47,19 @@ que.next(() => {
 #### Module
 
 ```ts
-import Queue from '@divlook/queue'
 import { Queue } from '@divlook/queue'
 ```
 
 #### CommonJs
 
 ```ts
-const Queue = require('@divlook/queue').default
 const { Queue } = require('@divlook/queue')
 ```
 
 #### Browser
 
 ```html
-<script src="https://unpkg.com/@divlook/queue/dist/queue.browser.js"></script>
+<script src="https://unpkg.com/@divlook/queue/dist/queue.js"></script>
 <script>
     var que = new Queue()
 </script>

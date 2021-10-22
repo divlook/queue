@@ -16,9 +16,8 @@
   "keywords": [
     "queue"
   ],
-  "main": "dist/queue.cjs.js",
-  "module": "dist/queue.esm.js",
-  "browser": "dist/queue.browser.js",
+  "main": "dist/queue.js",
+  "browser": "dist/queue.js",
   "types": "dist/@types/queue.d.ts",
   "files": [
     "dist"

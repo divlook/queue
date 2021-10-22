@@ -157,5 +157,3 @@ export class Queue {
         this.#que = []
     }
 }
-
-export default Queue
