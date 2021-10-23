@@ -149,10 +149,6 @@ export class Queue {
         })
     }
 
-    retry() {
-        this.next()
-    }
-
     /**
      * @alias clearQueue
      */
