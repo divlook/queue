@@ -65,6 +65,52 @@ const { Queue } = require('@divlook/queue')
 </script>
 ```
 
+### Error handling
+
+```ts
+const que = new Queue()
+
+que.addListener('error', (response) => {
+    if (response.error) {
+        if (Queue.isDefinedError(response.error)) {
+            /*
+            {
+                name: 'QueueError',
+                message:
+                    | 'Required parameter is missing `typeOrKey`'
+                    | 'Listener limit is 1000'
+            }
+            */
+        }
+
+        console.error(response.error)
+    }
+
+    // If you want to continue
+    que.next()
+
+    // If you want to cancel the remaining tasks
+    que.clearQueue()
+})
+```
+
 ## API DOC
 
-https://divlook.github.io/queue
+### Exports
+
+-   [Queue](https://divlook.github.io/queue/classes/Queue.html)
+-   [QueueResponseTypeKeys](https://divlook.github.io/queue/enums/QueueResponseTypeKeys.html)
+
+### Properties
+
+-   [isRunning](https://divlook.github.io/queue/classes/Queue.html#isRunning)
+-   [size](https://divlook.github.io/queue/classes/Queue.html#size)
+
+### Methods
+
+-   [next](https://divlook.github.io/queue/classes/Queue.html#next)
+-   [addListener](https://divlook.github.io/queue/classes/Queue.html#addListener)
+-   [removeAllListener](https://divlook.github.io/queue/classes/Queue.html#removeAllListener)
+-   [clearQueue](https://divlook.github.io/queue/classes/Queue.html#clearQueue)
+-   static [isDefinedError](https://divlook.github.io/queue/classes/Queue.html#isDefinedError)
+-   static [toType](https://divlook.github.io/queue/classes/Queue.html#toType)

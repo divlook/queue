@@ -107,6 +107,9 @@ export class Queue {
         }
     }
 
+    /**
+     * - limit : 1000
+     */
     addListener(typeOrKey: TypeOrKey, listener: QueueListener) {
         const type = Queue.toType(typeOrKey)
         const listeners = this.#listeners.get(type) ?? new Set()
