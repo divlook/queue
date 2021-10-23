@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/divlook/queue/compare/v1.1.0...v1.2.0) (2021-10-23)
+
+
+### Features
+
+* :fire: remove retry ([30ec6b9](https://github.com/divlook/queue/commit/30ec6b99e3e37369361ffcdc08fd146c16cf70cf))
+
 # [1.1.0](https://github.com/divlook/queue/compare/v1.0.1...v1.1.0) (2021-10-22)
 
 
