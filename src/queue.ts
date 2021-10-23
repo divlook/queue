@@ -153,7 +153,17 @@ export class Queue {
         this.next()
     }
 
+    /**
+     * @alias clearQueue
+     */
     clear() {
         this.#que = []
+    }
+
+    /**
+     * @alias clear
+     */
+    clearQueue() {
+        this.clear()
     }
 }
